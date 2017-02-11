@@ -1,10 +1,12 @@
 ########################
 
 # centos-ssh-testbed: centos 7 + openssh-server
+
 Config: Update root.ssh/authorized_keys with your public key
 
 Build: `docker build --rm -t cst .`
 
+WARNING: This section not yet tested on OSX!
 This next section will take care of dns addresses for our containers: [https://github.com/jderusse/docker-dns-gen]  This only needs to happen once per session
 
 `export DOCKER0IP=$(ifconfig docker0 | grep "inet" | head -n1 | awk '{ print $2}' | cut -d: -f2)`
@@ -17,7 +19,7 @@ This next section will take care of dns addresses for our containers: [https://g
 
 Now we can fire off new containers:
 
-`docker run -P --rm -d --name box1 cst`
+`docker run --rm -d --name box1 cst`
 
 or `for i in 1 2 3 ; do docker run -P --rm -d --name box${i} cst ; done`
 
