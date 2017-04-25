@@ -15,16 +15,18 @@
 FROM centos:7
 EXPOSE 22
 # Packages
-RUN yum update -y && yum install -y nmap-ncat vim openssh-server openssh-clients wget lsof which
+RUN yum update -y && yum install -y nmap-ncat vim wget lsof which
 
-# ssh configuration
-RUN sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
-RUN ssh-keygen -q -P "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+# openssh-server openssh-clients
 
-COPY root.ssh /root/.ssh
-RUN chmod 0600 /root/.ssh/*
+# ssh configuration - if we want it
+# RUN sed -i 's/#PermitRootLogin yes/PermitRootLogin yes/' /etc/ssh/sshd_config
+# RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+# RUN sed -ri 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+# RUN ssh-keygen -q -P "" -t rsa -f /etc/ssh/ssh_host_rsa_key
+
+# COPY root.ssh /root/.ssh
+# RUN chmod 0600 /root/.ssh/*
 
 # entrypoint
 COPY entrypoint.sh /entrypoint.sh
